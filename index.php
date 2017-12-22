@@ -1,7 +1,9 @@
 <?php
 
+require_once 'functions.php';
+
 $days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
-$hour_options = array(5, 6, 7, 8, 9);
+$hour_options = array(5, 6, 7, 8, 9, 10, 11);
 $minute_options = array(0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55);
 $config = array();
 
@@ -13,20 +15,16 @@ if(!empty($_POST)) {
         'minute' => intval($_POST[$machine . '-minute'])
     );
   }
-  $dest_folder = realpath('./');
-  $filepath = $dest_folder . '/config.json';
-  $handle = fopen( $filepath, "w");
-  if(FALSE === $handle) throw new Exception('Could not open config file here: ' . $filepath . '. Could be a permissions issue.');
-  $timestamp = time();
-  $wrote = fwrite($handle, json_encode($config));
-  if(FALSE === $wrote) throw new Exception('Could not write to config file here: ' . $filepath . '. Could be a permissions issue.');
-  fclose($handle);
-  chmod($filepath, 0750);
+  try {
+    write_config($config);
+    write_status(array());
+  } catch(Exception $e) {
+    die('Error saving configuration! ' . $e->getMessage());
+  }
 }
 
-if(empty($config) && file_exists('config.json')) {
-  $config = json_decode(file_get_contents('config.json'), TRUE);
-}
+$stored_config = read_config();
+if(empty($config) && (NULL !== $stored_config)) $config = $stored_config;
 
 if(empty($config)) {
   foreach ($days as $day) {
