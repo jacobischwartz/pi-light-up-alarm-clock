@@ -1,5 +1,6 @@
 <?php
 
+require_once 'functions.php';
 date_default_timezone_set('America/Chicago');
 $now = time();
 
@@ -13,8 +14,6 @@ $now = time();
  * - 5 minutes after alarm time: Turn off light entirely.
  * - Done.
  */
-
-require_once 'functions.php';
 
 $config = read_config();
 $status = read_status();
@@ -48,10 +47,10 @@ $alarm_time_today = mktime(
 
 set_log('Alarm time for today is ' . date('Y-m-d H:i', $alarm_time_today) . '. Current time is ' . date('Y-m-d H:i', $now));
 
-$alarm_light_ramp_time_start = strtotime('-30 minutes', $alarm_time_today);
+$alarm_light_ramp_time_start = strtotime('-' . RAMPUP_MINUTES . ' minutes', $alarm_time_today);
 $alarm_light_ramp_time_end = $alarm_time_today;
 $alarm_sound_time_start = $alarm_time_today;
-$alarm_sound_time_end = strtotime('+5 minutes', $alarm_time_today);
+$alarm_sound_time_end = strtotime('+' . POSTALARM_MINUTES . ' minutes', $alarm_time_today);
 
 if($now < $alarm_light_ramp_time_start) {
   set_light_level(0);

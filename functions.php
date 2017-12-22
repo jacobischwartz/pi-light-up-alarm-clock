@@ -1,5 +1,9 @@
 <?php
 
+define('DIMMER_PIN', 1);
+define('RAMPUP_MINUTES', 30);
+define('POSTALARM_MINUTES', 5);
+
 /**
  * @param array|stdClass $data A single data structure. Can be deep.
  * @throws Exception
@@ -58,11 +62,53 @@ function read_status() {
  * @param int $level 0 - 100 where 0 is off and 100 is full on.
  */
 function set_light_level($level) {
+  $level *= 1023;
+  $level = intval($level);
+  $level = max(0, min($level, 1023));
   set_log('Light level set to ' . $level . '/100');
+  $gpio_version = shell_exec("gpio -v");
+  if(FALSE === stripos($gpio_version, 'command not found')) {
+    set_log('No GPIO found');
+    return;
+  }
+  if($level < 100) {
+    shell_exec("gpio mode 1 pwm; gpio pwm " . DIMMER_PIN . " " . $level);
+  } else {
+    shell_exec("gpio mode 1 pwm; gpio pwm " . DIMMER_PIN . " " . $level);
+  }
 }
 
 function play_sound() {
   set_log('Starting 5 minutes of alarm sound!');
+  // TODO: An audio thing on the rPi.
+
+  /*
+   * Mess with the light pattern for a little while.
+   * Every 30 seconds for 5 minutes (10 times total):
+   * - 3 times (6 seconds total): Ramp on-off over a second then off-on over a second.
+   */
+  for($i=0; $i<10; $i++) {
+
+    $light_level = 100;
+    set_light_level($light_level);
+    for($j=0; $j<3; $j++) {
+      while($light_level > 5) {
+        $light_level -= 1.6;
+        set_light_level($light_level);
+        usleep(1000000/10);
+      }
+      while($light_level < 95) {
+        $light_level += 1.6;
+        set_light_level($light_level);
+        usleep(1000000/10);
+      }
+    }
+    $light_level = 100;
+    set_light_level($light_level);
+    sleep(24);
+
+  }
+
 }
 
 function set_log($msg) {
