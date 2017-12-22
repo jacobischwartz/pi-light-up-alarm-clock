@@ -79,7 +79,7 @@ function set_light_level($level) {
 }
 
 function play_sound() {
-  set_log('Starting 5 minutes of alarm sound!');
+  set_log('Starting 5 minutes of alarm action!');
   // TODO: An audio thing on the rPi.
 
   /*

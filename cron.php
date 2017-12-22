@@ -72,8 +72,7 @@ if($now < $alarm_light_ramp_time_end) {
   die();
 }
 
-set_light_level(100);
-set_log('Full brightness, sound should be playing.');
+set_log('Alarm action should be playing.');
 
 if((NULL !== $status) && (empty($status['sound_played']) || ($status['sound_played'] !== $alarm_sound_time_start))) {
   try {
