@@ -43,17 +43,37 @@ if(empty($config)) {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Alarm Clock Settings</title>
   <style>
+    body {
+      background: #403F4C;
+      color: #F9DC5C;
+      font-family: sans-serif;
+    }
     h3 {
       margin: 1em 0 0.5em;
+      font-weight: 300;
     }
     select {
       display: inline-block;
+    }
+    input[type="checkbox"] {
+      vertical-align: bottom;
+    }
+    input[type="submit"] {
+      border: solid 1px transparent;
+      background: #F9DC5C;
+      color: #403F4C;
+      font-weight: bold;
+      font-size: larger;
+      padding: 5px 10px;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
   <h1>Alarm Clock Settings</h1>
+
+  <h3>It is <?php echo date('g:ia \o\n l'); ?></h3>
 
   <form action="index.php" method="post">
 

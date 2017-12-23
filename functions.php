@@ -4,6 +4,8 @@ define('DIMMER_PIN', 1);
 define('RAMPUP_MINUTES', 30);
 define('POSTALARM_MINUTES', 5);
 
+date_default_timezone_set('America/Chicago');
+
 /**
  * @param array|stdClass $data A single data structure. Can be deep.
  * @throws Exception
