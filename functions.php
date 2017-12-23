@@ -90,20 +90,24 @@ function play_sound() {
    * Every 30 seconds for 5 minutes (10 times total):
    * - 3 times (6 seconds total): Ramp on-off over a second then off-on over a second.
    */
+  $second_in_microseconds = 1000000;
+  $frames_per_second = 20;
+  $frame_delay = $second_in_microseconds/$frames_per_second;
+  $change_per_frame = 10;
   for($i=0; $i<10; $i++) {
 
     $light_level = 100;
     set_light_level($light_level);
     for($j=0; $j<3; $j++) {
-      while($light_level > 5) {
-        $light_level -= 1.6;
+      while($light_level > 0) {
+        $light_level -= $change_per_frame;
         set_light_level($light_level);
-        usleep(1000000/10);
+        usleep($frame_delay);
       }
-      while($light_level < 95) {
-        $light_level += 1.6;
+      while($light_level < 100) {
+        $light_level += $change_per_frame;
         set_light_level($light_level);
-        usleep(1000000/10);
+        usleep($frame_delay);
       }
     }
     $light_level = 100;
