@@ -74,9 +74,9 @@ function set_light_level($level) {
     return;
   }
   if($level < 100) {
-    shell_exec("gpio mode 1 pwm; gpio pwm " . DIMMER_PIN . " " . $level);
+    shell_exec("gpio mode " . DIMMER_PIN . " pwm; gpio pwm " . DIMMER_PIN . " " . $level);
   } else {
-    shell_exec("gpio mode 1 pwm; gpio pwm " . DIMMER_PIN . " " . $level);
+    shell_exec("gpio mode " . DIMMER_PIN . " pwm; gpio pwm " . DIMMER_PIN . " " . $level);
   }
 }
 
