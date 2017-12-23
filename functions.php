@@ -67,7 +67,7 @@ function set_light_level($level) {
   $level = max(0, min($level, 1023));
   set_log('Light level set to ' . $level . '/100');
   $gpio_version = shell_exec("gpio -v");
-  if(FALSE === stripos($gpio_version, 'command not found')) {
+  if(FALSE !== stripos($gpio_version, 'command not found')) {
     set_log('No GPIO found');
     return;
   }
