@@ -64,19 +64,20 @@ function read_status() {
  * @param int $level 0 - 100 where 0 is off and 100 is full on.
  */
 function set_light_level($level) {
-  $level *= 1023;
+  $level *= 1023/100;
   $level = intval($level);
   $level = max(0, min($level, 1023));
-  set_log('Light level set to ' . $level . '/100');
-  $gpio_version = shell_exec("gpio -v");
+  set_log('Light level set to ' . $level . '/1023');
+  static $gpio_version;
+  if(empty($gpio_version)) $gpio_version = shell_exec("gpio -v 2>&1");
   if(FALSE !== stripos($gpio_version, 'command not found')) {
     set_log('No GPIO found');
     return;
   }
   if($level < 100) {
-    shell_exec("gpio mode " . DIMMER_PIN . " pwm; gpio pwm " . DIMMER_PIN . " " . $level);
+    shell_exec("gpio mode " . DIMMER_PIN . " pwm 2>&1; gpio pwm " . DIMMER_PIN . " " . $level . " 2>&1");
   } else {
-    shell_exec("gpio mode " . DIMMER_PIN . " pwm; gpio pwm " . DIMMER_PIN . " " . $level);
+    shell_exec("gpio mode " . DIMMER_PIN . " pwm 2>&1; gpio pwm " . DIMMER_PIN . " " . $level . " 2>&1");
   }
 }
 
