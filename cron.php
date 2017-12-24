@@ -81,4 +81,4 @@ if((NULL !== $status) && (empty($status['sound_played']) || ($status['sound_play
     set_log('Cannot play alarm sound because status is not savable. ' . $e->getMessage());
     die();
   }
-}
+} else set_log('Alarm action already be in progress.');

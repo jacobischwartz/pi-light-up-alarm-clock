@@ -85,6 +85,22 @@ function set_light_level($level) {
 
 function play_sound() {
   set_log('Starting 5 minutes of alarm action!');
+  $status = read_status();
+  if(NULL === $status) {
+    set_log('Could not read status. Aborting alarm action.');
+    return;
+  }
+  if(!empty($status['alarm_in_progress'])) {
+    set_log('Tried to start alarm action but already running.');
+    return;
+  }
+  $status['alarm_in_progress'] = TRUE;
+  try {
+    write_status($status);
+  } catch (Exception $e) {
+    set_log('Status is not savable. Aborting alarm action. ' . $e->getMessage());
+    die();
+  }
   // TODO: An audio thing on the rPi.
 
   /*
@@ -116,6 +132,19 @@ function play_sound() {
     set_light_level($light_level);
     sleep(24);
 
+  }
+
+  $status = read_status();
+  if(NULL === $status) {
+    set_log('Could not read status. Finished alarm action but trouble is brewing.');
+    return;
+  }
+  $status['alarm_in_progress'] = FALSE;
+  try {
+    write_status($status);
+  } catch (Exception $e) {
+    set_log('Status is not savable. Finished alarm action but trouble is brewing. ' . $e->getMessage());
+    return;
   }
 
 }
