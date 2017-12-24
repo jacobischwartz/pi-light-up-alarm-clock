@@ -20,7 +20,7 @@ function write_data_file($filename, $data) {
   $wrote = fwrite($handle, json_encode($data));
   if(FALSE === $wrote) throw new Exception('Could not write to config file here: ' . $filepath . '. Could be a permissions issue.');
   fclose($handle);
-  chmod($filepath, 0750);
+  chmod($filepath, 0777);
 }
 
 /**
