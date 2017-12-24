@@ -116,7 +116,7 @@ function play_sound() {
 
     $light_level = 100;
     set_light_level($light_level);
-    for($j=0; $j<3; $j++) {
+    for($j=0; $j<5; $j++) {
       while($light_level > 0) {
         $light_level -= $change_per_frame;
         set_light_level($light_level);
@@ -130,7 +130,7 @@ function play_sound() {
     }
     $light_level = 100;
     set_light_level($light_level);
-    sleep(24);
+    sleep(15);
 
   }
 
