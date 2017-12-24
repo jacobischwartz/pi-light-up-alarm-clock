@@ -21,6 +21,7 @@ if(!empty($_POST)) {
   } catch(Exception $e) {
     die('Error saving configuration! ' . $e->getMessage());
   }
+  $saved = TRUE;
 }
 
 $stored_config = read_config();
@@ -73,7 +74,11 @@ if(empty($config)) {
 
   <h1>Alarm Clock Settings</h1>
 
-  <h3>It is <?php echo date('g:ia \o\n l'); ?></h3>
+  <?php if(isset($saved)) { ?>
+    <h3><i>Settings saved</i></h3>
+  <?php } ?>
+
+  <h3>It is <?php echo date('g:ia \o\n l'); ?> and I love you</h3>
 
   <form action="index.php" method="post">
 
