@@ -42,7 +42,10 @@ if(empty($config)) {
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Alarm Clock Settings</title>
+  <link rel="apple-touch-icon" href="icon.png" />
+  <link rel="icon" href="icon.png" />
+  <link rel="shortcut icon" href="icon.png" />
+  <title>Wake Up Settings</title>
   <style>
     body {
       background: #403F4C;
@@ -72,7 +75,7 @@ if(empty($config)) {
 </head>
 <body>
 
-  <h1>Alarm Clock Settings</h1>
+  <h1>Wake Up Settings</h1>
 
   <?php if(isset($saved)) { ?>
     <h3><i>Settings saved</i></h3>
