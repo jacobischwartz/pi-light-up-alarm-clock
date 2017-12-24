@@ -3,6 +3,7 @@
 define('DIMMER_PIN', 1);
 define('RAMPUP_MINUTES', 30);
 define('POSTALARM_MINUTES', 5);
+define('USING_TRANSISTOR', TRUE);
 
 date_default_timezone_set('America/Chicago');
 
@@ -74,8 +75,9 @@ function set_light_level($level) {
     set_log('No GPIO found');
     return;
   }
-  if($level < 100) {
-    shell_exec("gpio mode " . DIMMER_PIN . " pwm 2>&1; gpio pwm " . DIMMER_PIN . " " . $level . " 2>&1");
+  if(USING_TRANSISTOR) $level = 1023 - $level;
+  if((1023 === $level) && USING_TRANSISTOR) {
+    shell_exec("gpio mode " . DIMMER_PIN . " out 2>&1; gpio write " . DIMMER_PIN . " 1 2>&1");
   } else {
     shell_exec("gpio mode " . DIMMER_PIN . " pwm 2>&1; gpio pwm " . DIMMER_PIN . " " . $level . " 2>&1");
   }
@@ -119,5 +121,5 @@ function play_sound() {
 }
 
 function set_log($msg) {
-  echo $msg . '<br />';
+  echo $msg . '<br />' . PHP_EOL;
 }
