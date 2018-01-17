@@ -75,7 +75,6 @@ function set_light_level($level) {
     set_log('No GPIO found');
     return;
   }
-  if(USING_TRANSISTOR) $level = 1023 - $level;
   if((1023 === $level) && USING_TRANSISTOR) {
     shell_exec("gpio mode " . DIMMER_PIN . " out 2>&1; gpio write " . DIMMER_PIN . " 1 2>&1");
   } else {
