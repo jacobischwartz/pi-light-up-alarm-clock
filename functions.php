@@ -104,14 +104,14 @@ function play_sound() {
 
   /*
    * Mess with the light pattern for a little while.
-   * Every 30 seconds for 5 minutes (10 times total):
+   * Every 30 seconds for 15 minutes (30 times total):
    * - 3 times (6 seconds total): Ramp on-off over a second then off-on over a second.
    */
   $second_in_microseconds = 1000000;
   $frames_per_second = 20;
   $frame_delay = $second_in_microseconds/$frames_per_second;
   $change_per_frame = 10;
-  for($i=0; $i<10; $i++) {
+  for($i=0; $i<30; $i++) {
 
     $light_level = 100;
     set_light_level($light_level);
