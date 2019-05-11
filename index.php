@@ -3,7 +3,7 @@
 require_once 'functions.php';
 
 $days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
-$hour_options = array(5, 6, 7, 8, 9, 10, 11);
+$hour_options = array(4, 5, 6, 7, 8, 9, 10, 11);
 $minute_options = array(0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55);
 $config = array();
 
